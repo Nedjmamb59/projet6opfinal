@@ -1,143 +1,120 @@
-// @ts-nocheck
-/* Variables */
-const gallery = document.querySelector(".gallery");
-const body = document.querySelector("body");
-const containerFiltres = document.querySelector(".container-filtres");
-// Variables pour la partie conexion
-const token = window.sessionStorage.getItem("token");
-const user = window.sessionStorage.getItem("userId");
-const logOut = document.getElementById("login-link");
-const sectionPortfolio = document.querySelector("#portfolio");
-const sectionPortfolioH2 = document.querySelector("#portfolio h2");
-const adminText = "Mode édition";
-const adminLogo = `<i class="fa-regular fa-pen-to-square"></i>`;
-const adminConexionUP = `<div class="admin-edit">
-<p>${adminLogo}${adminText}</p>
-</div>`;
-const divEdit = document.createElement("div");
-const spanEdit = document.createElement("span");
-const adminConexionDown = `${adminLogo}  ${adminText} `;
+// Variables globales pour les éléments DOM et les données utilisateur
+const gallery = document.querySelector(".gallery"); // Sélectionne la galerie d'images
+const containerFiltres = document.querySelector(".container-filtres"); // Sélectionne le conteneur des filtres
+const logOut = document.getElementById("login-link"); // Sélectionne le lien de déconnexion
+const sectionPortfolio = document.querySelector("#portfolio"); // Sélectionne la section portfolio
+const sectionPortfolioH2 = document.querySelector("#portfolio h2"); // Sélectionne le titre de la section portfolio
 
-/* Chercher le tableau de works avec une requête à l'API */
+// Fonction asynchrone pour récupérer les travaux depuis l'API
 async function getWorks() {
+  // Requête asynchrone pour récupérer les travaux
   const requete = await fetch("http://localhost:5678/api/works");
-  return requete.json();
-}
-async function getCategory() {
-  const requete = await fetch("http://localhost:5678/api/categories");
-  return requete.json();
+  return requete.json(); // Retourne les données au format JSON
 }
 
+// Fonction principale asynchrone pour l'initialisation
 async function main() {
-  displayWorksGallery();
-  createAllButtons();
-  logginAdmin();
-  logoutAdmin();
-  displayByCategory();
+  displayWorksGallery(); // Affiche les travaux dans la galerie
+  createAllButtons(); // Crée tous les boutons de filtre
+  logginAdmin(); // Gère l'affichage administratif si l'utilisateur est connecté
+  logoutAdmin(); // Gère la déconnexion de l'utilisateur
 }
-main();
 
-/* affichage des works dans le dom */
+// Fonction pour afficher les travaux dans la galerie
 function displayWorksGallery() {
-  gallery.innerHTML = "";
+  gallery.innerHTML = ""; // Vide la galerie actuelle
   getWorks().then((data) => {
-    //cree pour chaque élément du tableau
-    // console.log(data);
+    // Récupère les travaux depuis l'API
     data.forEach((work) => {
-      createWork(work);
+      createWork(work); // Crée chaque élément de travail dans la galerie
     });
   });
 }
 
+// Fonction pour créer un élément de travail dans la galerie
 function createWork(work) {
-  const figure = document.createElement("figure");
-  const img = document.createElement("img");
-  const figcaption = document.createElement("figcaption");
-  figcaption.textContent = work.title;
-  img.src = work.imageUrl;
-  img.alt = work.title;
-  figure.appendChild(img);
-  figure.appendChild(figcaption);
-  gallery.appendChild(figure);
+  const figure = document.createElement("figure"); // Crée une balise <figure> pour chaque travail
+  const img = document.createElement("img"); // Crée une balise <img> pour l'image du travail
+  const figcaption = document.createElement("figcaption"); // Crée une balise <figcaption> pour le titre du travail
+  figcaption.textContent = work.title; // Définit le titre du travail
+  img.src = work.imageUrl; // Définit l'URL de l'image du travail
+  img.alt = work.title; // Définit l'attribut alt de l'image
+  figure.appendChild(img); // Ajoute l'image à la balise <figure>
+  figure.appendChild(figcaption); // Ajoute le titre à la balise <figure>
+  gallery.appendChild(figure); // Ajoute la balise <figure> à la galerie
 }
 
-/*****Création des bouton dynamiquement******/
-/*Boucle for pour creer les bouton par catégorie*/
+// Fonction pour créer tous les boutons de filtre dynamiquement
 function createAllButtons() {
   getCategory().then((data) => {
-    // console.log(data);
+    // Récupère les catégories depuis l'API
     data.forEach((category) => {
-      createButton(category);
+      createButton(category); // Crée un bouton pour chaque catégorie
     });
   });
 }
+
+// Fonction pour créer un bouton de filtre
 function createButton(category) {
-  const btn = document.createElement("button");
-  btn.classList.add("buttons-filtres");
-  btn.textContent = category.name;
-  btn.id = category.id;
-  containerFiltres.appendChild(btn);
-  // console.log(category.id);
-  // console.log(category.name);
+  const btn = document.createElement("button"); // Crée un élément <button> pour chaque catégorie
+  btn.classList.add("buttons-filtres"); // Ajoute la classe CSS pour les boutons de filtre
+  btn.textContent = category.name; // Définit le texte du bouton avec le nom de la catégorie
+  btn.id = category.id; // Définit l'ID du bouton avec l'ID de la catégorie
+  containerFiltres.appendChild(btn); // Ajoute le bouton au conteneur des filtres
 }
 
-// Trie par classe sur les boutons filtres
+// Fonction pour afficher les travaux filtrés par catégorie
 async function displayByCategory() {
-  const works = await getWorks();
-  const buttons = document.querySelectorAll(".container-filtres button");
+  const works = await getWorks(); // Récupère tous les travaux depuis l'API
+  const buttons = document.querySelectorAll(".container-filtres button"); // Sélectionne tous les boutons de filtre
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
       buttons.forEach((btn) => {
-        btn.classList.remove("active");
+        btn.classList.remove("active"); // Désactive tous les boutons de filtre
       });
-      button.classList.add("active");
-      const btnId = e.target.id;
-      gallery.innerHTML = "";
+      button.classList.add("active"); // Active le bouton cliqué
+      const btnId = e.target.id; // Récupère l'ID du bouton cliqué
+      gallery.innerHTML = ""; // Vide la galerie actuelle
       works.forEach((work) => {
-        if (btnId == work.categoryId) {
+        if (btnId == work.categoryId || btnId == "0") {
+          // Affiche les travaux correspondant à la catégorie sélectionnée ou tous les travaux si "Tous" est sélectionné
           createWork(work);
-          // console.log(work);
-        }
-        if (btnId == "0") {
-          createWork(work);
-          // console.log(work);
         }
       });
     });
   });
-  // console.log(buttons);
 }
 
-/*****Partie ou l'utilisateur et connecté*****/
+// Fonction pour gérer l'affichage administratif si l'utilisateur est connecté
 function logginAdmin() {
   if (user) {
-    // Modifications si L'utilisateur est connecté
-    // console.log("L'utilisateur est connecté");
-    logOut.textContent = "logout";
-    document.body.insertAdjacentHTML("afterbegin", adminConexionUP);
-    spanEdit.innerHTML = adminConexionDown;
-    divEdit.classList.add("div-edit");
-    divEdit.appendChild(sectionPortfolioH2);
-    divEdit.appendChild(spanEdit);
-    sectionPortfolio.prepend(divEdit);
-    containerFiltres.style = "display:none";
+    // Si l'utilisateur est connecté
+    logOut.textContent = "logout"; // Modifie le texte du lien de déconnexion
+    document.body.insertAdjacentHTML("afterbegin", adminConexionUP); // Insère du HTML avant le début du corps
+    spanEdit.innerHTML = adminConexionDown; // Modifie le contenu de l'élément <span> pour l'administration
+    divEdit.classList.add("div-edit"); // Ajoute une classe CSS à l'élément <div> pour l'édition
+    divEdit.appendChild(sectionPortfolioH2); // Ajoute le titre de la section portfolio à l'élément <div>
+    divEdit.appendChild(spanEdit); // Ajoute l'élément <span> à l'élément <div>
+    sectionPortfolio.prepend(divEdit); // Insère l'élément <div> au début de la section portfolio
+    containerFiltres.style = "display:none"; // Masque le conteneur des filtres
   } else {
-    // L'utilisateur n'est pas connecté
+    // Si l'utilisateur n'est pas connecté
     // console.log("L'utilisateur n'est pas connecté");
   }
 }
 
-/****Suprimer le userToken du local storage si click sur log Out******/
+// Fonction pour gérer la déconnexion de l'utilisateur
 function logoutAdmin() {
   logOut.addEventListener("click", () => {
     if (user) {
-      window.sessionStorage.setItem("token", "");
-      logOut.textContent = "login";
-      window.sessionStorage.setItem("userId", "");
-      window.location.href = "index.html";
+      // Si l'utilisateur est connecté
+      window.sessionStorage.setItem("token", ""); // Réinitialise le jeton dans le stockage de session
+      logOut.textContent = "login"; // Modifie le texte du lien de déconnexion
+      window.sessionStorage.setItem("userId", ""); // Réinitialise l'ID utilisateur dans le stockage de session
+      window.location.href = "index.html"; // Redirige vers la page d'accueil
     } else {
-      //renvoi sur page conexion
-      window.location.href = "login.html";
+      // Si l'utilisateur n'est pas connecté
+      window.location.href = "login.html"; // Redirige vers la page de connexion
     }
   });
 }
