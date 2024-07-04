@@ -1,0 +1,15 @@
+//---------------------------------------------------
+//Footer
+//---------------------------------------------------
+footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #ffffff;
+  width: 100%;
+  nav ul {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2em;
+  }
+}

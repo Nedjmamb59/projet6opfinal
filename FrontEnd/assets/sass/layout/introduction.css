@@ -1,0 +1,21 @@
+#introduction {
+  display: flex;
+  align-items: center;
+  margin-bottom: 140px;
+}
+#introduction figure {
+  flex: 1;
+}
+#introduction figure img {
+  display: block;
+  width: 80%;
+}
+#introduction article {
+  flex: 1;
+}
+#introduction article h2 {
+  margin-bottom: 1em;
+}
+#introduction article p {
+  margin-bottom: 0.5em;
+}

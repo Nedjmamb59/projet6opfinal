@@ -1,0 +1,50 @@
+@charset "UTF-8";
+#portfolio {
+  /*Préparation des filtres*/
+  /****************Utilisateur conectée****************/
+}
+#portfolio h2 {
+  text-align: center;
+}
+#portfolio .container-filtres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  height: 100px;
+}
+#portfolio .container-filtres .buttons-filtres {
+  background-color: #fefef8;
+  padding: 9px 20px;
+  border: 1px solid #1d6154;
+  border-radius: 25px;
+  color: #1d6154;
+  font-weight: 700;
+  font-size: 1.2rem;
+  font-family: Syne;
+  cursor: pointer;
+}
+#portfolio .container-filtres .active {
+  background-color: #1d6154;
+  color: white;
+}
+#portfolio .gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+#portfolio .gallery img {
+  width: 100%;
+}
+#portfolio .div-edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5em;
+  gap: 10px;
+}
+#portfolio .div-edit span {
+  cursor: pointer;
+}

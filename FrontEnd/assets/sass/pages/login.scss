@@ -1,0 +1,29 @@
+/******************Page login************************/
+/*lien Mot de passe oublié du form de conexion*/
+.main-login {
+  min-height: 650px;
+  margin-top: 90px;
+  #contact{
+    form{
+      input[type="submit"]{
+        height: 100%;
+        padding: 10px 0px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+.form__lien {
+  color: black;
+  font-weight: 700;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.errorLogin {
+  color: #ff0000;
+}
+#login-link {
+  cursor: pointer;
+}

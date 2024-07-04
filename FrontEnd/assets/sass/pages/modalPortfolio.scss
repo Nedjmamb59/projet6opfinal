@@ -1,0 +1,115 @@
+#modalContent {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modalPortfolio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  border-radius: 5px;
+  width: 32%;
+  height: 66%;
+  position: relative;
+  min-height: 500px;
+  min-width: 300px;
+  span {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    .fa-xmark {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+  h3 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  h2 {
+    margin-top: 50px;
+    color: black;
+    font-size: 26px;
+    font-family: Work Sans;
+    font-weight: 400;
+    margin-bottom: 50px;
+  }
+  .container-gallery-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80%;
+    width: 70%;
+    .modalGallery {
+      width: 100%;
+      height: 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 40% 40% 40%;
+      grid-column-gap: 10px;
+      grid-row-gap: 30px;
+      figure {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        span {
+          display: block;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background-color: black;
+          height: 18px;
+          width: 18px;
+          border-radius: 2px;
+          .fa-trash-can {
+            color: white;
+            font-size: 0.6rem;
+            cursor: pointer;
+          }
+        }
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .container-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 20%;
+      width: 100%;
+      border-top: 1px solid gray;
+      .buttons {
+        background-color: #1d6154;
+        padding: 9px 50px;
+        border-radius: 25px;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        font-family: Syne;
+        cursor: pointer;
+      }
+      .buttons:hover {
+        background-color: white;
+        border: 1px solid #1d6154;
+        color: #1d6154;
+      }
+    }
+  }
+}
