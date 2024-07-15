@@ -81,7 +81,7 @@ function createButton(category) {
   // console.log(category.name);
 }
 
-// Trie par classe sur les boutons filtres
+// Trie par classe sur les boutons filtres.
 async function displayByCategory() {
   const works = await getWorks();
   const buttons = document.querySelectorAll(".container-filtres button");
@@ -108,7 +108,7 @@ async function displayByCategory() {
   // console.log(buttons);
 }
 
-/*****Partie ou l'utilisateur et conecté*****/
+/*****Partie ou l'utilisateur et connecté*****/
 function logginAdmin() {
   if (user) {
     // Modifications si L'utilisateur est connecté
